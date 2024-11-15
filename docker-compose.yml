@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db_fonte:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: fonte_user
+      POSTGRES_PASSWORD: fonte_pass
+      POSTGRES_DB: fonte_db
+    ports:
+      - "5434:5432"
+
+  db_alvo:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: alvo_user
+      POSTGRES_PASSWORD: alvo_pass
+      POSTGRES_DB: alvo_db
+    ports:
+      - "5435:5432"
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db_fonte
+      - db_alvo
