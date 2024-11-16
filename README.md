@@ -53,7 +53,7 @@ Abra o terminal ou CMD
 Clone este repositório:
 git clone https://github.com/MoesioFiuza/Delfos-Energy-Desafio.git
 
-Crie um pasta para o repositório com:
+Mude de pasta para o repositório com:
 "cd Delfos-Energy-Desafio"
 
 
