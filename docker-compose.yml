@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # Configurações dos bancos de dados (db_fonte e db_alvo)
+
   db_fonte:
     image: postgres:latest
     container_name: db_fonte
@@ -34,7 +34,7 @@ services:
     networks:
       - delfos_network
 
-  # Serviço da API
+
   api:
     build:
       context: .
