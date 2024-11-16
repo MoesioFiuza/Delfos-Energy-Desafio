@@ -1,6 +1,6 @@
-CREATE TABLE IF NOT EXISTS data (
+CREATE TABLE IF NOT EXISTS dados (
     timestamp TIMESTAMP PRIMARY KEY,
-    wind_speed FLOAT NOT NULL,
-    power FLOAT NOT NULL,
-    ambient_temperature FLOAT NOT NULL
+    velocidade_vento FLOAT NOT NULL,
+    potencia FLOAT NOT NULL,
+    temperatura_ambiente FLOAT NOT NULL
 );

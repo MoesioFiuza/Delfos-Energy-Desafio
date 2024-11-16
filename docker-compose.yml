@@ -1,28 +1,70 @@
 version: '3.8'
 
 services:
+  # Configurações dos bancos de dados (db_fonte e db_alvo)
   db_fonte:
     image: postgres:latest
+    container_name: db_fonte
     environment:
       POSTGRES_USER: fonte_user
       POSTGRES_PASSWORD: fonte_pass
       POSTGRES_DB: fonte_db
     ports:
       - "5434:5432"
+    volumes:
+      - fonte_data:/var/lib/postgresql/data
+      - ./init_source.sql:/docker-entrypoint-initdb.d/init_source.sql
+    restart: always
+    networks:
+      - delfos_network
 
   db_alvo:
     image: postgres:latest
+    container_name: db_alvo
     environment:
       POSTGRES_USER: alvo_user
       POSTGRES_PASSWORD: alvo_pass
       POSTGRES_DB: alvo_db
     ports:
       - "5435:5432"
+    volumes:
+      - alvo_data:/var/lib/postgresql/data
+      - ./init_target.sql:/docker-entrypoint-initdb.d/init_target.sql
+    restart: always
+    networks:
+      - delfos_network
 
+  # Serviço da API
   api:
-    build: .
+    build:
+      context: .
+    container_name: fastapi_etl
     ports:
       - "8000:8000"
     depends_on:
       - db_fonte
       - db_alvo
+    environment:
+      FONTE_DB_HOST: db_fonte
+      FONTE_DB_PORT: 5432
+      FONTE_DB_USER: fonte_user
+      FONTE_DB_PASSWORD: fonte_pass
+      FONTE_DB_NAME: fonte_db
+      ALVO_DB_HOST: db_alvo
+      ALVO_DB_PORT: 5432
+      ALVO_DB_USER: alvo_user
+      ALVO_DB_PASSWORD: alvo_pass
+      ALVO_DB_NAME: alvo_db
+    restart: always
+    networks:
+      - delfos_network
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+
+volumes:
+  fonte_data:
+  alvo_data:
+
+
+networks:
+  delfos_network:
+    driver: bridge

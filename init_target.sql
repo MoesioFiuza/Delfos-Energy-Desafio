@@ -9,4 +9,3 @@ CREATE TABLE IF NOT EXISTS data (
     value FLOAT NOT NULL,
     PRIMARY KEY (timestamp, signal_id)
 );
-
