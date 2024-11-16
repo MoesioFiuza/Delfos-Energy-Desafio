@@ -9,7 +9,7 @@ def gerar_dados_aleatorios(sessao: Session, dias: int = 10):
     data_inicial = data_final - timedelta(days=dias)
     data_atual = data_inicial
 
-    # Inserir dados com intervalo de 1 minuto
+    
     registros = []
     while data_atual < data_final:
         velocidade_vento = round(random.uniform(0, 25), 2)  
