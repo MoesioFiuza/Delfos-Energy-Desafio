@@ -103,7 +103,7 @@ Você pode verificar diretamente no banco de dados Fonte através do comando:
 
 "docker exec -it db_fonte psql -U fonte_user -d fonte_db"
 
-Que acessará o banco de dados Fonte, no qual você pode executar a seguinte querry:
+Que acessará o banco de dados Fonte, no qual você pode executar a seguinte query:
 
 
 "SELECT * FROM dados LIMIT 10;"
