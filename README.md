@@ -9,29 +9,37 @@ Essa é a solução que eu implementaria para um ETL
 
 
 ## Visão geral do Projeto
-├── .env                # Configurações de ambiente docker
+├── Python 3.12.3        # Versão usada para o projeto
 
-├── docker-compose.yml  # Configuração dos containers Docker
+├── .env                 # Configurações de ambiente docker
 
-├── Dockerfile          # Imagem base para FastAPI e ETL
+├── docker-compose.yml   # Configuração dos containers Docker
 
-├── banco_dados.py      # Conexão com os bancos de dados
+├── Dockerfile           # Imagem base para FastAPI e ETL
 
-├── esquemas.py         # Definição dos modelos Pydantic
+├── banco_dados.py       # Conexão com os bancos de dados
 
-├── etl_script.py       # Script ETL
+├── esquemas.py          # Definição dos modelos Pydantic
 
-├── Gerador de Dados.py # Script para popular o banco fonte
+├── etl_script.py        # Script ETL
 
-├── main.py             # Arquivo principal da API
+├── Gerador de Dados.py  # Script para popular o banco fonte
 
-├── modelos.py          # Modelos SQLAlchemy
+├── main.py              # Arquivo principal da API
 
-├── requirements.txt    # Dependências do projeto
+├── modelos.py           # Modelos SQLAlchemy
 
-├── rotas.py            # Rotas da API
+├── requirements.txt     # Dependências do projeto
 
-└── servico_dados.py    # Lógica de acesso ao banco de dados
+├── rotas.py             # Rotas da API
+
+├── servico_dados.py     # Lógica de acesso ao banco de dados
+
+├── init_source.sql      # Inicializa o banco de dados fonte
+
+├── init_target.sql      # Configura o banco de dados destino
+
+
 
 
 
@@ -45,19 +53,14 @@ Python 3.10+
 
 (-)Docker-Compose
 
-(-)Git
 ## Configuração do Ambiente
 
-Abra o terminal ou CMD
+Baixe ou clone esse repositório para sua IDE de preferência:
 
-Clone este repositório:
-git clone https://github.com/MoesioFiuza/Delfos-Energy-Desafio.git
-
-Mude de pasta para o repositório com:
-"cd Delfos-Energy-Desafio"
+https://github.com/MoesioFiuza/Delfos-Energy-Desafio.git
 
 
-Recomendação é por criar um ambiente virtual para prevenir possíveis conflitos entre bibliotecas previamente instaladas na sua máquina:
+A recomendação é por criar um ambiente virtual para prevenir possíveis conflitos entre bibliotecas previamente instaladas na sua máquina:
 
 python3 -m venv venv
 
@@ -73,7 +76,7 @@ pip install -r requirements.txt
 
 
 
-## Uso
+## Execução
 
 
 1. Executar o Projeto com Docker
@@ -81,7 +84,7 @@ pip install -r requirements.txt
 Iniciar os containers:
 
 
-docker-compose up --build
+'docker-compose up --build'
 
 
 FastAPI estará disponível em: http://localhost:8000
@@ -92,7 +95,7 @@ FastAPI estará disponível em: http://localhost:8000
 Execute o script Gerador de Dados.py dentro do container fastapi_etl:
 
 
-docker exec -it fastapi_etl python Gerador\ de\ Dados.py
+'docker exec -it fastapi_etl python Gerador\ de\ Dados.py'
 
 
 Apos a execução do script Gerador de Dados.py você verá a mensagem no terminal:
@@ -103,7 +106,7 @@ Você pode verificar diretamente no banco de dados Fonte através do comando:
 
 "docker exec -it db_fonte psql -U fonte_user -d fonte_db"
 
-Que acessará o banco de dados Fonte, no qual você pode executar a seguinte query:
+Que acessará o banco de dados Fonte, no qual você pode executar a seguinte querry:
 
 
 "SELECT * FROM dados LIMIT 10;"
@@ -142,6 +145,18 @@ Digite a data no formato YYYY-MM-DD para selecionar os dados do dia, lembrando q
 
 
 Você verá todos os dados que a API moveu de um banco para o outro, seguido da mensagem "Processo ETL concluído com sucesso."
+
+Você pode verificar os dados no banco de dados alvo com o seguinte comando:
+
+'docker exec -it db_alvo psql -U alvo_user -d alvo_db'
+
+Acesso para todas as tabelas:
+
+'\dt'
+
+
+
+
 
 
 
